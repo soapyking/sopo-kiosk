@@ -1,4 +1,4 @@
-from greeter import app
+from kiosk import app
 
 @app.route('/')
 def emit_login():
