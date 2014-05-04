@@ -1,7 +1,7 @@
 import configparser
-from configparser import ConfigParser
+from configparser import SafeConfigParser
 
-class SopoConfig(ConfigParser):
+class SopoConfig(SafeConfigParser):
 
 	sources = ['/etc/sopo.conf', '~/.sopo.conf']
 
