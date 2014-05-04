@@ -1,4 +1,4 @@
-from greeter import app
+from kiosk import app
 
 if __name__ == "__main__":
 	print("Running")
