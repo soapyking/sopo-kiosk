@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import Column, Integer, VARCHAR, ForeignKey
 
 from base_model import Base
 
@@ -6,9 +6,9 @@ class User(Base):
 	__tablename__ = 'users'
 
 	id = Column(Integer, primary_key=True)
-	phone = Column(String, index=True)
-	name = Column(String, default="")
-	type = Column(String)
+	phone = Column(VARCHAR(255), index=True)
+	name = Column(VARCHAR(255), default="")
+	type = Column(VARCHAR(255))
 
 	__mapper_args__ = {
 		'polymorphic_identity':'',
@@ -19,7 +19,7 @@ class Admin(User):
 	__tablename__ = 'admins'
 
 	id = Column(Integer, ForeignKey('users.id'), primary_key=True)
-	password = Column(String)
+	password = Column(VARCHAR(255))
 	
 	__mapper_args__ = { 'polymorphic_identity':'admin' }
 
