@@ -1,15 +1,15 @@
-from sqlalchemy import Column, Integer, VARCHAR, ForeignKey
+#from sqlalchemy import Column, Integer, VARCHAR, ForeignKey
 from sqlalchemy.dialects import mysql
 
-from base_model import Base
+from kiosk import db
 
-class User(Base):
+class User(db.Model):
 	__tablename__ = 'users'
 
-	id = Column(Integer, primary_key=True)
-	phone = Column(VARCHAR(255), index=True)
-	name = Column(VARCHAR(255), default="")
-	type = Column(mysql.ENUM('admin','volunteer','guest'))
+	id = db.Column(db.Integer, primary_key=True)
+	phone = db.Column(db.VARCHAR(255), index=True)
+	name = db.Column(db.VARCHAR(255), default="")
+	type = db.Column(mysql.ENUM('admin','volunteer','guest'))
 
 	__mapper_args__ = {
 		'polymorphic_identity':'',
@@ -19,15 +19,15 @@ class User(Base):
 class Admin(User):
 	__tablename__ = 'admins'
 
-	id = Column(Integer, ForeignKey('users.id'), primary_key=True)
-	password = Column(VARCHAR(255))
+	id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
+	password = db.Column(db.VARCHAR(255))
 
 	__mapper_args__ = { 'polymorphic_identity':'admin' }
 
 class Volunteer(User):
 	__tablename__ = 'volunteers'
 
-	id = Column(Integer, ForeignKey('users.id'), primary_key=True)
+	id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
 
 	def hours(start_time, end_time):
 		''' Calculate hours spent volunteering between time arguments '''
@@ -37,6 +37,6 @@ class Volunteer(User):
 class Guest(User):
 	__tablename__ = 'guests'
 
-	id = Column(Integer, ForeignKey('users.id'), primary_key=True)
+	id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
 
 	__mapper_args__ = { 'polymorphic_identity':'guest' }

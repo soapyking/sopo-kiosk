@@ -1,4 +1,4 @@
-from connector import engine
-from user import *
+from kiosk import db
+from models.user import *
 
-Base.metadata.create_all(engine)
+db.create_all()
