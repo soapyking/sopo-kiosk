@@ -1,5 +1,7 @@
 from flask import Flask
 app = Flask(__name__)
+from sopolib.confighelper import SopoConfig
+
 config = SopoConfig()
 mysql_user = config.get('mysql','user')
 mysql_pass = config.get('mysql','pass', raw=True)
