@@ -1,5 +1,6 @@
 #from sqlalchemy import Column, Integer, VARCHAR, ForeignKey
 from sqlalchemy.dialects import mysql
+from sqlalchemy import UniqueConstraint
 
 from kiosk import db
 
@@ -9,10 +10,11 @@ class User(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	phone = db.Column(db.VARCHAR(255), index=True)
 	name = db.Column(db.VARCHAR(255), default="")
-	type = db.Column(mysql.ENUM('admin','volunteer','guest'))
+	type = db.Column('type', mysql.ENUM('admin','volunteer','guest', 'base_user'),
+			default='base_user')
+	__table_args__ = (UniqueConstraint('type', 'phone', name='_phone_type_uc'),)
 
 	__mapper_args__ = {
-		'polymorphic_identity':'',
 		'polymorphic_on':type
 	}
 
