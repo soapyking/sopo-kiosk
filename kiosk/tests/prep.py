@@ -2,8 +2,9 @@
 import os
 import pytest
 from flask import Flask
+from flask.ext.sqlalchemy import SQLAlchemy
 
-from kiosk import app, db, config
+from kiosk import app
 from sopolib.confighelper import SopoConfig
 
 
@@ -31,18 +32,23 @@ def app_fixture(request):
 
 @pytest.fixture(scope='session')
 def db_fixture(app_fixture, request):
-	db = SQLAlchemy(app_fixture)
+	db.app = app_fixture
+	db.drop_all()
 	db.create_all()
 
 	def teardown():
 		db.drop_all()
 
 	request.addfinalizer(teardown)
+	assert 0
 	return db
 
 @pytest.fixture(scope='function')
 def session_fixture(db_fixture, request):
+	connection = db_fixture.engine.connect()
 	db_fixture.session = db_fixture.create_scoped_session()
+
+	options = dict(bind=connection, binds={})
 
 	def teardown():
 		db_fixture.session.rollback()

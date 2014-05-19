@@ -5,17 +5,25 @@ from tests.prep import *
 class TestUser:
 
 	@pytest.fixture(scope='function')
-	def user_fixture(session_fixture, request):
-		db.session.execute("drop database if exists {0}".format(self.test_db_name))
-		db.session.execute("create database {0}".format(self.test_db_name))
-		db.session.commit()
+	def user_fixture(self, session_fixture):
 		test_user = User()
 		test_user.phone = '0000000000'
 		test_user.name = 'test_user'
-		test_user.type = ''
-		test_user.type = ''
-		db.session.add(test_user)
-		db.session.commit()
+		test_user.type = 'base_user'
+		session_fixture.add(test_user)
+		session_fixture.commit()
+
+		assert session_fixture.query(User).count() == 1
+
+	def test_insert_guest(self, session_fixture, user_fixture):
+		test_guest = Guest()
+		test_guest.phone = '0000000000'
+		test_guest.name = 'test_guest'
+		test_guest.type = 'guest'
+		session_fixture.add(test_guest)
+		session_fixture.commit()
+
+		assert session_fixture.query(Guest).count() == 1
 
 	def test_null(user_fixture, request):
 		assert True
