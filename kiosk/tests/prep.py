@@ -4,13 +4,12 @@ import pytest
 from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy
 
+from models.user import *
 from kiosk import app
 from sopolib.confighelper import SopoConfig
 
-
 @pytest.fixture(scope='session')
 def app_fixture(request):
-	app = Flask(__name__)
 
 	config = SopoConfig()
 	mysql_user = config.get('mysql','user')
@@ -40,7 +39,6 @@ def db_fixture(app_fixture, request):
 		db.drop_all()
 
 	request.addfinalizer(teardown)
-	assert 0
 	return db
 
 @pytest.fixture(scope='function')
