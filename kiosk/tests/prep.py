@@ -19,6 +19,7 @@ def app_fixture(request):
 
 	app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://{0}:{1}@{2}/{3}'.format(
 			mysql_user, mysql_pass, mysql_host, mysql_db)
+	app.config['TESTING'] = True
 
 	test_context = app.app_context()
 	test_context.push()
@@ -28,6 +29,10 @@ def app_fixture(request):
 
 	request.addfinalizer(teardown)
 	return app
+
+@pytest.fixture(scope='session')
+def client_fixture(app_fixture, request):
+	return app_fixture.test_client()
 
 @pytest.fixture(scope='session')
 def db_fixture(app_fixture, request):
@@ -45,8 +50,6 @@ def db_fixture(app_fixture, request):
 def session_fixture(db_fixture, request):
 	connection = db_fixture.engine.connect()
 	db_fixture.session = db_fixture.create_scoped_session()
-
-	options = dict(bind=connection, binds={})
 
 	def teardown():
 		db_fixture.session.rollback()
