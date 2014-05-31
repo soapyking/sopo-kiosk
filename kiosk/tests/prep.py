@@ -3,9 +3,10 @@ import os
 import pytest
 from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy
+from flask.ext.login import LoginManager
 
 from models.user import *
-from kiosk import app
+from kiosk import app, db
 from sopolib.confighelper import SopoConfig
 
 @pytest.fixture(scope='session')
@@ -16,6 +17,7 @@ def app_fixture(request):
 	mysql_pass = config.get('mysql','pass', raw=True)
 	mysql_host = config.get('mysql','host')
 	mysql_db = "sopo_test"
+	app_key = config.get('flask','secret_key')
 
 	app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://{0}:{1}@{2}/{3}'.format(
 			mysql_user, mysql_pass, mysql_host, mysql_db)
@@ -36,7 +38,7 @@ def client_fixture(app_fixture, request):
 
 @pytest.fixture(scope='session')
 def db_fixture(app_fixture, request):
-	db.app = app_fixture
+	#db.app = app_fixture
 	db.drop_all()
 	db.create_all()
 

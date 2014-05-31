@@ -8,11 +8,12 @@ class User(db.Model):
 	__tablename__ = 'users'
 
 	id = db.Column(db.Integer, primary_key=True)
-	phone = db.Column(db.VARCHAR(255), index=True)
-	name = db.Column(db.VARCHAR(255), default="")
+	uname = db.Column(db.VARCHAR(255), unique = True, nullable = False)
+	phone = db.Column(db.VARCHAR(255), default = "")
+	fullname = db.Column(db.VARCHAR(255), default="")
 	type = db.Column('type', mysql.ENUM('admin','volunteer','guest', 'base_user'),
 			default='base_user')
-	__table_args__ = (UniqueConstraint('type', 'phone', name='_phone_type_uc'),)
+	__table_args__ = (UniqueConstraint('type', 'uname', name='_uname_type_uc'),)
 
 	__mapper_args__ = {
 		'polymorphic_on':type
