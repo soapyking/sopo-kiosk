@@ -9,11 +9,7 @@
   {% block content %}
     <div class="container">
         <form class="form-signin" role="form" method="post">
-					{% if returning %}
-          <h3 class="form-signin-heading">Welcome back. Change your contact info?</h3>
-					{% else %}
-          <h3 class="form-signin-heading">Welcome! Enter your contact info?</h3>
-					{% endif %}
+          <h3 class="form-signin-heading">Welcome! Change your contact info?</h3>
           <input type="email" class="form-control"
             placeholder="email address" autofocus="" name="email">
           <input type="text" class="form-control"

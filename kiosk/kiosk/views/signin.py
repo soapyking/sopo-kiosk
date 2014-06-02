@@ -15,17 +15,33 @@ def emit_signin():
 @app.route('/signin', methods=["POST"])
 def submit_signin():
 	uname = request.form['uname']
+	user = User.query.filter_by(uname=uname).first()
+	if not user:
+		app.logger.debug("New user %s registered", uname)
+		new_user = User()
+		new_user.uname = uname
+		db.session.add(new_user)
+		db.session.commit()
 	return redirect(url_for('emit_user_info', uname=uname))
 
 @app.route('/edit_info', methods=["GET"])
 def emit_user_info():
 	uname = request.args['uname']
 	user = User.query.filter_by(uname=uname).first()
-	if user:
-		return render_template('edit_info.html', returning = True)
-	else:
-		return render_template('edit_info.html', returning = False)
+	return render_template('edit_info.html')
+
+@app.route('/edit_info', methods=["POST"])
+def submit_user_info():
+	email = request.form['email']
+	zip = request.form['zip']
+	uname = request.args['uname']
+	user = User.query.filter_by(uname=uname).first()
+	user.email = email
+	user.zip = zip
+	db.session.add(user)
+	db.session.commit()
+	return redirect(url_for('emit_waiver'))
 
 @app.route('/waiver_confirm', methods=["GET"])
 def emit_waiver():
-	pass
+	return render_template('base.html')

@@ -17,6 +17,11 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://{0}:{1}@{2}/{3}'.format
 app.secret_key = app_key
 db = SQLAlchemy(app)
 db.session = db.create_scoped_session()
+import logging
+from logging.handlers import RotatingFileHandler
+log_handler = RotatingFileHandler('debug.log', maxBytes=1024*1024)
+log_handler.setLevel(logging.DEBUG)
+app.logger.addHandler(log_handler)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
