@@ -10,10 +10,10 @@
     <div class="container">
         <form class="form-signin" role="form" method="post">
           <h3 class="form-signin-heading">Welcome! Change your contact info?</h3>
-          <input type="email" class="form-control"
-            placeholder="email address" autofocus="" name="email">
-          <input type="text" class="form-control"
-            placeholder="zip code" name="zip">
+          <input type="email" class="form-control" autofocus="" name="email"
+            placeholder="Email address{% if email %}: {{email}}{% else %}not yet set!{% endif %}">
+          <input type="text" class="form-control" name="zip"
+            placeholder="Zip code{% if zip %}: {{zip}}{% else %}not yet set!{% endif %}">
           <button class="btn btn-lg btn-primary btn-block" type="submit">Continue</button>
         </form>
       </div>

@@ -9,9 +9,9 @@ class User(db.Model):
 
 	id = db.Column(db.Integer, primary_key=True)
 	uname = db.Column(db.VARCHAR(255), unique = True, nullable = False)
-	phone = db.Column(db.VARCHAR(255), default = "")
 	fullname = db.Column(db.VARCHAR(255), default="")
 	email = db.Column(db.VARCHAR(255), default = "")
+	zip = db.Column(db.VARCHAR(5), default = "")
 	type = db.Column('type', mysql.ENUM('admin','volunteer','guest', 'base_user'),
 			default='base_user')
 	__table_args__ = (UniqueConstraint('type', 'uname', name='_uname_type_uc'),)
