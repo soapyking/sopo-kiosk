@@ -28,16 +28,18 @@ def submit_signin():
 def emit_user_info():
 	uname = request.args['uname']
 	user = User.query.filter_by(uname=uname).first()
-	return render_template('edit_info.html', email=user.email, zip=user.zip)
+	return render_template('edit_info.html', email=user.email, zip=user.zip, fullname = user.fullname)
 
 @app.route('/edit_info', methods=["POST"])
 def submit_user_info():
 	email = request.form['email']
 	zip = request.form['zip']
+	fullname = request.form['fullname']
 	uname = request.args['uname']
 	user = User.query.filter_by(uname=uname).first()
 	user.email = email if len(email) > 0 else user.email
 	user.zip = zip if len(zip) > 0 else user.zip
+	user.fullname = fullname if len(fullname) > 0 else user.fullname
 	db.session.add(user)
 	db.session.commit()
 	return redirect(url_for('emit_waiver'))
