@@ -28,3 +28,7 @@ login_manager.init_app(app)
 
 import kiosk.views.signin
 import kiosk.views.administration
+
+from models.event import *
+
+app.current_event = db.session.query(Event).order_by(Event.id.desc()).first()

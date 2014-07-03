@@ -2,9 +2,8 @@ from sqlalchemy import UniqueConstraint
 import datetime
 
 from kiosk import db
-from models.event_types import *
 
-import Enum
+from enum import Enum
 
 class EventType(Enum):
 	SHOP_HOURS = 1
@@ -12,11 +11,8 @@ class EventType(Enum):
 	SHOP_SPECIAL = 3
 	REMOTE_EVENT = 4
 
-class Event(db.Models):
+class Event(db.Model):
 	__tablename__ = 'events'
-
-	def __init__(self, event_type):
-		if event_type == EventType.SHOP_HOURS:
 
 	id = db.Column(db.Integer, primary_key=True)
 	event_type = db.Column(db.Integer, default = EventType.SHOP_HOURS)

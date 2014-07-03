@@ -3,6 +3,8 @@ from kiosk import app, db
 import re
 
 from models.user import *
+from models.signin import *
+from models.event import Event
 
 @app.route('/', methods=["GET"])
 @app.route('/signin', methods=["GET"])
@@ -50,9 +52,20 @@ def submit_user_info():
 	user.fullname = fullname if len(fullname) > 0 else user.fullname
 	db.session.add(user)
 	db.session.commit()
-	return redirect(url_for('emit_waiver'))
+	return redirect(url_for('emit_waiver', uname=uname))
 
 @app.route('/waiver_confirm', methods=["GET"])
 def emit_waiver():
 	''' CYA '''
-	return render_template('base.html')
+	return render_template('waiver.html')
+
+@app.route('/waiver_confirm', methods=["POST"])
+def accept_waiver():
+	''' AC'd '''
+	uname = request.args['uname']
+	signin = Signin()
+	signin.user_id = User.query.filter_by(uname=uname).first().id
+	signin.event_id = app.current_event.id
+	db.session.add(signin)
+	db.session.commit()
+	return redirect(url_for('emit_signin'))
