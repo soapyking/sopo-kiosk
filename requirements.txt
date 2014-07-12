@@ -1,6 +1,7 @@
 Flask==0.10.1
 Flask-Login==0.2.11
 Flask-SQLAlchemy==1.0
+Flask-Testing==0.4.1
 Flask-WTF==0.9.5
 Jinja2==2.7.2
 MarkupSafe==0.21
@@ -10,4 +11,5 @@ WTForms==1.0.5
 Werkzeug==0.9.4
 itsdangerous==0.24
 py==1.4.20
+pycrypto==2.6.1
 pytest==2.5.2
