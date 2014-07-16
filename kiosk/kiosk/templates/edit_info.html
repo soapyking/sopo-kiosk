@@ -10,8 +10,8 @@
     <div class="container">
         <form class="form-signin" role="form" method="post">
           <h3 class="form-signin-heading">Tell Us About Yourself</h3>
-          <input type="textarea" rows="5" class="form-control" name="whatup"
-            placeholder="What are you working on?">
+          <textarea class="form-control" rows="5"
+            placeholder="What are you working on?" name="whatup"></textarea>
           <input type="text" class="form-control" name="fullname"
             placeholder="Full name: {% if fullname %}{{fullname}}{% else %}not yet set!{% endif %}">
           <input type="email" class="form-control" autofocus="" name="email"

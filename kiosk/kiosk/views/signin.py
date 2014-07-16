@@ -72,7 +72,6 @@ def accept_waiver():
 	''' AC'd '''
 	if not session['username']:
 		return redirect(url_for('emit_signin'))
-	return render_template('waiver.html')
 	signin = Signin()
 	signin.user_id = User.query.filter_by(uname=session['username']).first().id
 	signin.event_id = Event.get_current_event().id

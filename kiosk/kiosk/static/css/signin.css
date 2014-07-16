@@ -27,3 +27,9 @@
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
 }
+
+.form-signin textarea {
+  margin-bottom: 5px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
