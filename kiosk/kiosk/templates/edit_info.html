@@ -9,7 +9,9 @@
   {% block content %}
     <div class="container">
         <form class="form-signin" role="form" method="post">
-          <h3 class="form-signin-heading">Change your contact info?</h3>
+          <h3 class="form-signin-heading">Tell Us About Yourself</h3>
+          <input type="textarea" rows="5" class="form-control" name="whatup"
+            placeholder="What are you working on?">
           <input type="text" class="form-control" name="fullname"
             placeholder="Full name: {% if fullname %}{{fullname}}{% else %}not yet set!{% endif %}">
           <input type="email" class="form-control" autofocus="" name="email"

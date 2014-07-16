@@ -1,6 +1,5 @@
 from flask import render_template, request, url_for, redirect, session
 from kiosk import app, db
-import re
 
 from models.user import *
 from models.signin import *
@@ -13,6 +12,7 @@ def emit_signin():
 		continue to volunteer/visit screen or register screen.
 	'''
 	session['username'] = ""
+	session['whatup'] = ""
 	return render_template("signin.html")
 
 @app.route('/signin', methods=["POST"])
@@ -50,10 +50,12 @@ def submit_user_info():
 	email = request.form['email']
 	zip = request.form['zip']
 	fullname = request.form['fullname']
+	whatup = request.form['whatup']
 	user = User.query.filter_by(uname=session['username']).first()
 	user.email = email if len(email) > 0 else user.email
 	user.zip = zip if len(zip) > 0 else user.zip
 	user.fullname = fullname if len(fullname) > 0 else user.fullname
+	session['whatup'] = whatup
 	db.session.add(user)
 	db.session.commit()
 	return redirect(url_for('emit_waiver'))
@@ -74,6 +76,7 @@ def accept_waiver():
 	signin = Signin()
 	signin.user_id = User.query.filter_by(uname=session['username']).first().id
 	signin.event_id = Event.get_current_event().id
+	signin.notes = session['whatup']
 	db.session.add(signin)
 	db.session.commit()
 	return redirect(url_for('emit_signin'))
