@@ -6,6 +6,9 @@ from models.signin import *
 from models.event import Event
 
 @app.route('/', methods=["GET"])
+def redirect_root():
+	return redirect(url_for('emit_signin'))
+
 @app.route('/signin', methods=["GET"])
 def emit_signin():
 	''' Let user input uname. User will
@@ -78,4 +81,8 @@ def accept_waiver():
 	signin.notes = session['whatup']
 	db.session.add(signin)
 	db.session.commit()
-	return redirect(url_for('emit_signin'))
+	return redirect(url_for('all_good'))
+
+@app.route('/all_good', methods=["GET"])
+def all_good():
+	return render_template('all_good.html', target=url_for('emit_signin', _external=True))
