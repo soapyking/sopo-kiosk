@@ -19,3 +19,7 @@ class Event(db.Model):
 	event_name = db.Column(db.VARCHAR(255))
 	time_start = db.Column(db.DateTime, default = datetime.datetime.utcnow())
 	time_end = db.Column(db.DateTime)
+
+  @staticmethod
+  def get_current_event():
+    db.session.query(Event).order_by(Event.id.desc()).first()

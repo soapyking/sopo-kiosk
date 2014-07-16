@@ -36,6 +36,8 @@ def submit_signin():
 def emit_user_info():
 	''' Show page for user to edit his info
 	'''
+	if not session['username']:
+		return redirect(url_for('emit_signin'))
 	user = User.query.filter_by(uname=session['username']).first()
 	return render_template('edit_info.html', email=user.email, zip=user.zip, fullname = user.fullname)
 
@@ -43,6 +45,8 @@ def emit_user_info():
 def submit_user_info():
 	''' Accept user's modified info and update his records
 	'''
+	if not session['username']:
+		return redirect(url_for('emit_signin'))
 	email = request.form['email']
 	zip = request.form['zip']
 	fullname = request.form['fullname']
@@ -57,14 +61,19 @@ def submit_user_info():
 @app.route('/waiver_confirm', methods=["GET"])
 def emit_waiver():
 	''' CYA '''
+	if not session['username']:
+		return redirect(url_for('emit_signin'))
 	return render_template('waiver.html')
 
 @app.route('/waiver_confirm', methods=["POST"])
 def accept_waiver():
 	''' AC'd '''
+	if not session['username']:
+		return redirect(url_for('emit_signin'))
+	return render_template('waiver.html')
 	signin = Signin()
 	signin.user_id = User.query.filter_by(uname=session['username']).first().id
-	signin.event_id = app.current_event.id
+	signin.event_id = Event.get_current_event().id
 	db.session.add(signin)
 	db.session.commit()
 	return redirect(url_for('emit_signin'))
