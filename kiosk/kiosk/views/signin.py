@@ -29,7 +29,7 @@ def submit_signin():
 		new_user.uname = uname
 		db.session.add(new_user)
 		db.session.commit()
-	session['username'] = new_user.uname
+	session['username'] = uname
 	return redirect(url_for('emit_user_info'))
 
 @app.route('/edit_info', methods=["GET"])

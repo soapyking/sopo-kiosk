@@ -22,4 +22,4 @@ class Event(db.Model):
 
 	@staticmethod
 	def get_current_event():
-		db.session.query(Event).order_by(Event.id.desc()).first()
+		return db.session.query(Event).order_by(Event.id.desc()).first()

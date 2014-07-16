@@ -28,5 +28,3 @@ login_manager.init_app(app)
 
 import kiosk.views.signin
 import kiosk.views.administration
-
-from models.event import *
