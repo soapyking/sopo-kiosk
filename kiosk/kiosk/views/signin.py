@@ -1,4 +1,4 @@
-from flask import render_template, request, url_for, redirect
+from flask import render_template, request, url_for, redirect, session
 from kiosk import app, db
 import re
 
@@ -12,6 +12,7 @@ def emit_signin():
 	''' Let user input uname. User will
 		continue to volunteer/visit screen or register screen.
 	'''
+	session['username'] = ""
 	return render_template("signin.html")
 
 @app.route('/signin', methods=["POST"])
@@ -28,14 +29,14 @@ def submit_signin():
 		new_user.uname = uname
 		db.session.add(new_user)
 		db.session.commit()
-	return redirect(url_for('emit_user_info', uname=uname))
+	session['username'] = new_user.uname
+	return redirect(url_for('emit_user_info'))
 
 @app.route('/edit_info', methods=["GET"])
 def emit_user_info():
 	''' Show page for user to edit his info
 	'''
-	uname = request.args['uname']
-	user = User.query.filter_by(uname=uname).first()
+	user = User.query.filter_by(uname=session['username']).first()
 	return render_template('edit_info.html', email=user.email, zip=user.zip, fullname = user.fullname)
 
 @app.route('/edit_info', methods=["POST"])
@@ -45,14 +46,13 @@ def submit_user_info():
 	email = request.form['email']
 	zip = request.form['zip']
 	fullname = request.form['fullname']
-	uname = request.args['uname']
-	user = User.query.filter_by(uname=uname).first()
+	user = User.query.filter_by(uname=session['username']).first()
 	user.email = email if len(email) > 0 else user.email
 	user.zip = zip if len(zip) > 0 else user.zip
 	user.fullname = fullname if len(fullname) > 0 else user.fullname
 	db.session.add(user)
 	db.session.commit()
-	return redirect(url_for('emit_waiver', uname=uname))
+	return redirect(url_for('emit_waiver'))
 
 @app.route('/waiver_confirm', methods=["GET"])
 def emit_waiver():
@@ -62,9 +62,8 @@ def emit_waiver():
 @app.route('/waiver_confirm', methods=["POST"])
 def accept_waiver():
 	''' AC'd '''
-	uname = request.args['uname']
 	signin = Signin()
-	signin.user_id = User.query.filter_by(uname=uname).first().id
+	signin.user_id = User.query.filter_by(uname=session['username']).first().id
 	signin.event_id = app.current_event.id
 	db.session.add(signin)
 	db.session.commit()
