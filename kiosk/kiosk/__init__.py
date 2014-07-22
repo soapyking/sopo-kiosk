@@ -24,6 +24,7 @@ log_handler.setLevel(logging.DEBUG)
 app.logger.addHandler(log_handler)
 
 login_manager = LoginManager()
+login_manager.login_view = 'administration.admin_login'
 login_manager.init_app(app)
 
 import kiosk.views.signin

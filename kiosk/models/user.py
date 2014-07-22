@@ -29,6 +29,18 @@ class Admin(User):
 
 	__mapper_args__ = { 'polymorphic_identity':'admin' }
 
+	def is_authenticated(self):
+		return True
+
+	def is_active(self):
+		return True
+
+	def is_anonymous(self):
+		return False
+
+	def get_id(self):
+		return self.id
+
 class Volunteer(User):
 	__tablename__ = 'volunteers'
 
