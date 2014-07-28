@@ -6,7 +6,6 @@ from kiosk import app, login_manager
 
 @app.route('/administration/login', methods=['GET'])
 def admin_login():
-	app.logger.error("Emitted login page")
 	return render_template('admin_login.html')
 
 @app.route('/administration/login', methods=['POST'])
