@@ -58,6 +58,8 @@ def submit_user_info():
 	user.email = email if len(email) > 0 else user.email
 	user.zip = zip if len(zip) > 0 else user.zip
 	user.fullname = fullname if len(fullname) > 0 else user.fullname
+	# Type field may be necessary when signin in volunteers
+	user.type = 'guest'
 	session['whatup'] = whatup
 	db.session.add(user)
 	db.session.commit()

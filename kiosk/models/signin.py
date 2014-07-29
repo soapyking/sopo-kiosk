@@ -11,3 +11,5 @@ class Signin(db.Model):
 	event_id = db.Column(db.Integer, db.ForeignKey('events.id'), primary_key=True, nullable=False)
 	time_in = db.Column(db.DateTime, default=datetime.datetime.utcnow(), nullable=False)
 	notes = db.Column(db.VARCHAR(255), default="", nullable=True)
+	user = db.relationship("User", backref="Signin")
+	event = db.relationship("Event", backref="Signin")
