@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %} Administration {% endblock %}
+<!DOCTYPE html>
+  {% block head %}
+  <script>
+    $(function() {
+      $( "#datepicker" ).datepicker({ inline: true});
+    });
+    </script>
+  {% endblock %}
+
+  {% block content %}
+    <div class="container">
+			<form role="form" action="/administration/download/guest_signins" method="get">
+        <div class="row">
+          <div class="col-md-6 text-right">
+            <p>Since: <input type="text" id="datepicker" name="since"></p>
+          </div>
+          <div class="col-md-6">
+            <button class="btn btn-lg btn-primary" type="submit" role="button">Download signins as CSV</button>
+          </div>
+        </div> <!-- download signin row -->
+      </form>
+    </div>
+  {% endblock %}

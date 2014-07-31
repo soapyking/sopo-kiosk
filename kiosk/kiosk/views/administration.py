@@ -34,14 +34,21 @@ def admin_logout():
 @app.route('/administration', methods=['GET'])
 @login_required
 def administration_home():
-	return render_template('base.html')
+	return render_template('admin_home.html')
 
 @app.route('/administration/download/guest_signins')
 @login_required
 def download_signins(since=None):
-	nowtime = datetime.datetime.utcnow()
-	if not since:
-		since = nowtime - datetime.timedelta(weeks=1)
+	intimeformat = "%m/%d/%Y"
+	outtimeformat = "%Y-%b-%dT%H-%M-%S"
+	nowtime = datetime.datetime.utcnow().strftime(outtimeformat)
+	since = request.args.get('since', None)
+	if since:
+		since = datetime.datetime.strptime(since, intimeformat)
+		since = since.strftime(outtimeformat)
+	else:
+		# By default, give signins in last week
+		since = (nowtime - datetime.timedelta(weeks=1)).strftime(outtimeformat)
 	# If excel allowed commented lines...
 	#csv_body = "\"\"\" These are the guest signins since {0} \"\"\"".format(since)
 	csv_body = ""
@@ -56,7 +63,6 @@ def download_signins(since=None):
 				csv_writer.writerow(csv_line)
 		csv_body = csv_body + csv_out.getvalue()
 	response = make_response(csv_body)
-	timeformat = "%Y-%m-%dT%H-%M-%S"
-	dated_filename = "guests_{0}_{1}".format(since.strftime(timeformat), nowtime.strftime(timeformat))
+	dated_filename = "guests_{0}_{1}".format(since, nowtime)
 	response.headers["Content-Disposition"] = "attachment; filename={0}.csv".format(dated_filename)
 	return response
