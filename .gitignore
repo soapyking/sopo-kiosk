@@ -56,3 +56,6 @@ coverage.xml
 docs/_build/
 
 *.swp
+
+# 3rd party web stuff
+kiosk/kiosk/static/3p
