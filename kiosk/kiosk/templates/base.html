@@ -7,19 +7,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="">
   <meta name="author" content="">
-  <script type="text/javascript" src="static/3p/js/jquery-1.11.1.js"></script>
-  <style type="text/css"></style>
-  <link href="static/3p/css/bootstrap.css" rel="stylesheet">
-  <link href="static/css/common.css" rel="stylesheet">
+
+  <script type="text/javascript" src="/static/3p/js/jquery-1.11.1.js"></script>
+
+  <link href="/static/3p/css/bootstrap.css" rel="stylesheet">
+  <link href="/static/css/common.css" rel="stylesheet">
 
   <title>{% block title %}{% endblock %} - SOPO Bicycle Co-op</title>
   {% block head %}
   {% endblock %}
 </head>
 <body>
-    <div id="content">{% block content %}{% endblock %}</div>
-    <div id="footer">
-        {% block footer %}
-        {% endblock %}
+  <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="/signin">Sopo <span class="glyphicon glyphicon-home"></span></a>
+      </div>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="/administration/login">Administration</a></li>
+      </ul>
     </div>
+  </div>
+
+  <div id="content">{% block content %}{% endblock %}</div>
+  <div id="footer">
+    {% block footer %}
+    {% endblock %}
+  </div>
 </body>

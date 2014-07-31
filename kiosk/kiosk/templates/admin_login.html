@@ -1,35 +1,18 @@
+{% extends "base.html" %}
+{% block title %} Signin {% endblock %}
 <!DOCTYPE html>
 <!-- Pretty much a lot like the bootstrap exmaple login page - cjulian -->
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Admin login page">
-    <meta name="author" content="Chris J">
+  {% block head %}
+  <link href="/static/css/signin.css" rel="stylesheet">
+  {% endblock %}
 
-    <title>Admin login</title>
-
-    <link href="/static/3p/css/bootstrap.css" rel="stylesheet">
-
-    <link href="/static/css/admin_login.css" rel="stylesheet">
-    <link href="/static/css/common.css" rel="stylesheet">
-    <link href="/static/css/admin_common.css" rel="stylesheet">
-
-  </head>
-
-  <body>
-
+  {% block content %}
     <div class="container">
-
       <form class="form-signin" role="form" method="post">
-        <h2 class="form-signin-heading">Login</h2>
+        <h2 class="form-signin-heading">Admins only, fools</h2>
         <input type="name" class="form-control" placeholder="User Name" name="uname" required autofocus>
         <input type="password" class="form-control" placeholder="Password" name="password" required>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
       </form>
-
     </div> <!-- /container -->
-
-  </body>
-</html>
+  {% endblock %}
