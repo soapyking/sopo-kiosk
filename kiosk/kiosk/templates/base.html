@@ -24,7 +24,13 @@
         <a class="navbar-brand" href="/signin">Sopo <span class="glyphicon glyphicon-home"></span></a>
       </div>
       <ul class="nav navbar-nav navbar-right">
+        {% if session.current_admin %}
+        <li><a href="/administration/download/guest_signins">Download recent</a></li>
+        {% endif %}
         <li><a href="/administration">Administration</a></li>
+        {% if session.current_admin %}
+        <li><a href="/administration/logout">Log out</a></li>
+        {% endif %}
       </ul>
     </div>
   </div>
