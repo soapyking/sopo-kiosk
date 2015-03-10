@@ -2,16 +2,41 @@
 {% block title %} Signin {% endblock %}
 <!DOCTYPE html>
   {% block head %}
+	<script type="text/javascript" src="/static/js/signin.js"></script>
+	<!-- <script type="text/javascript" src="/static/3p/js/jquery.steps.js"></script> -->
   <link href="/static/css/signin.css" rel="stylesheet">
+  <!-- <link href="/static/3p/css/jquery.steps.css" rel="stylesheet"> -->
   {% endblock %}
 
   {% block content %}
-    <div class="container">
-			<form class="form-signin" role="form" method="post">
+		<div class="container">
+			<form id="signinform" action="/signin" class="form-signin" role="form" method="post">
 				<h3 class="form-signin-heading">Welcome! Please sign in</h3>
-				<input type="text" class="form-control"
-					placeholder="First initial last name (ex. &quot;jdoe&quot; for John Doe)" autofocus="" name="uname">
-				<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+				<div id="steptualized">
+  				<h3 class="form-signin-heading">Name</h3>
+						<!-- <input type="tel" class="form-control" placeholder="Phone #" name="tel" autofocus required> -->
+						<input type="text" class="form-control" name="uname" placeholder="Name" autofocus required />
+						<div class="checkbox" style="text-align:left; margin-left:10px">
+							<label>
+								<input type="checkbox" name="volunteering">I'm volunteering!</>
+							</label>
+						</div>
+          <h3 class="form-signin-heading">Info</h3>
+          	<textarea class="form-control" rows="5"
+            	placeholder="What are you working on?" name="whatup" autofocus></textarea>
+          	<input type="text" class="form-control" name="fullname"
+            	placeholder="Full name">
+          	<input type="email" class="form-control" name="email"
+            	placeholder="Email address">
+          	<input type="text" class="form-control" name="zip"
+            	placeholder="Zip code">
+							<!-- <input type="button" name="previous" class="btn btn-lg btn-primary btn-block previous action-button" value="Previous" /> -->
+					<h3 class="form-signin-heading">READ THIS</h1>
+					<h4 class="form-signin-heading">HEY. You can get hurt. So be careful.</h4>
+					<input type="submit" class="btn btn-lg btn-primary btn-block" value="OK" />
 			</form>
-    </div>
+  	</div>
   {% endblock %}
+
+
+</body></html>
