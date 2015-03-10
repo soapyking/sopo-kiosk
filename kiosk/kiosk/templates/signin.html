@@ -2,16 +2,54 @@
 {% block title %} Signin {% endblock %}
 <!DOCTYPE html>
   {% block head %}
+	<script type="text/javascript" src="/static/js/signin.js"></script>
   <link href="/static/css/signin.css" rel="stylesheet">
   {% endblock %}
 
   {% block content %}
-    <div class="container">
-			<form class="form-signin" role="form" method="post">
-				<h3 class="form-signin-heading">Welcome! Please sign in</h3>
-				<input type="text" class="form-control"
-					placeholder="First initial last name (ex. &quot;jdoe&quot; for John Doe)" autofocus="" name="uname">
-				<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+		<div class="container">
+			<form id="signinform" class="form-signin" role="form" method="post">
+				<!-- progressbar -->
+				<!-- <ul id="progressbar">
+					<li class="active"></li>
+					<li></li>
+					<li></li>
+					</ul> -->
+				<fieldset>
+  				<h3 class="form-signin-heading">Welcome! Please sign in</h3>
+					<input type="tel" class="form-control" placeholder="Phone #" autofocus="">
+					<!-- <input type="text" class="form-control" placeholder="Name" /> -->
+					<input type="button" name="next" class="btn btn-lg btn-primary btn-block next action-button" value="Next" />
+				</fieldset>
+				<fieldset>
+          <h3 class="form-signin-heading">Tell Us About Yourself</h3>
+          <textarea class="form-control" rows="5"
+            placeholder="What are you working on?" name="whatup"></textarea>
+          <input type="text" class="form-control" name="fullname"
+            placeholder="Full name: {% if fullname %}{{fullname}}{% else %}not yet set!{% endif %}">
+          <input type="email" class="form-control" autofocus="" name="email"
+            placeholder="Email address: {% if email %}{{email}}{% else %}not yet set!{% endif %}">
+          <input type="text" class="form-control" name="zip"
+            placeholder="Zip code: {% if zip %}{{zip}}{% else %}not yet set!{% endif %}">
+					<div class="row">
+						<div class="span6">
+							<!-- <input type="button" name="previous" class="btn btn-lg btn-primary btn-block previous action-button" value="Previous" /> -->
+							<input type="button" name="previous" class="btn btn-lg btn-primary btn-block previous action-button" value="Previous" />
+						</div>
+						<div class="span6">
+							<input type="button" name="next" class="btn btn-lg btn-primary btn-block next action-button" value="Next" />
+						</div>
+					</div>
+				</fieldset>
+				<fieldset>
+					<h1 class="form-signin-heading">Waiver</h1>
+					<h4 class="form-signin-heading">Yo. You can get hurt. So be careful. </h4>
+					<input type="button" name="previous" class="btn btn-lg btn-primary btn-block previous action-button" value="Previous" />
+					<input type="submit" name="submit" class="btn btn-lg btn-primary btn-block submit action-button" value="Aight" />
+				</fieldset>
 			</form>
-    </div>
+  	</div>
   {% endblock %}
+
+
+</body></html>
