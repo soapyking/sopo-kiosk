@@ -3,9 +3,8 @@ $(document).ready(function() {
 
 	$(".next").click(function(){
 		
-		console.log("It's happening")
-		current_fs = $(this).parent();
-		next_fs = $(this).parent().next();
+		current_fs = $(this).closest("fieldset");
+		next_fs = $(this).closest("fieldset").next();
 		
 		//activate next step on progressbar using the index of next_fs
 		$("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
