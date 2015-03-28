@@ -12,7 +12,7 @@ class User(db.Model):
 	fullname = db.Column(db.VARCHAR(255), default="")
 	email = db.Column(db.VARCHAR(255), default = "")
 	zip = db.Column(db.VARCHAR(5), default = "")
-	type = db.Column('type', mysql.ENUM('admin','volunteer','guest', 'base_user'),
+	type = db.Column(db.VARCHAR(255), mysql.ENUM('admin','volunteer','guest', 'base_user'),
 			default='base_user')
 	__table_args__ = (UniqueConstraint('type', 'uname', name='_uname_type_uc'),)
 

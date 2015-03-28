@@ -26,7 +26,4 @@ $(document).ready(function() {
 		current_fs.hide();
 	});
 
-	$(".submit").click(function(){
-		return false;
-	})
 })
