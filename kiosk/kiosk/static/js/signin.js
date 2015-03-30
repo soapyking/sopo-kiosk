@@ -1,8 +1,7 @@
 $(document).ready(function() {
 	var current_fs, next_fs, previous_fs; //fieldsets
 
-	$(".next").click(function(){
-		
+	function moveon() {
 		current_fs = $(this).closest("fieldset");
 		next_fs = $(this).closest("fieldset").next();
 		
@@ -11,7 +10,9 @@ $(document).ready(function() {
 		
 		next_fs.show(); 
 		current_fs.hide();
-	});
+	};
+
+	$(".next").click(moveon);
 
 	$(".previous").click(function(){
 		
@@ -24,6 +25,14 @@ $(document).ready(function() {
 		//show the previous fieldset
 		previous_fs.show(); 
 		current_fs.hide();
+	});
+
+	$(":input").keypress(function(e) {
+		if(e.which == 13) {
+			e.preventDefault();
+			$(".next").click();
+			//moveon();
+		}
 	});
 
 })

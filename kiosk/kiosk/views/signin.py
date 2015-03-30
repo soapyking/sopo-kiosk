@@ -27,14 +27,15 @@ def submit_signin():
 	name = request.form.get('fullname')
 	email = request.form.get('email')
 	zip = request.form.get('zip')
-	# type = 'volunteer' if request.form.get('volunteering') else 'guest'
+	utype = 'volunteer' if request.form.get('volunteering') else 'guest'
+	user_class = Volunteer if request.form.get('volunteering') else Guest
 	try:
-		user = Guest.query.filter_by(uname=uname, type=type).first()
+		user = user_class.query.filter_by(uname=uname).first()
 		if not user:
 			app.logger.debug("New user %s registered", uname)
-			user = Guest()
+			user = user_class()
 			user.uname = uname
-			# user.type = type
+			user.utype = utype
 		user.name = name if name else user.name
 		user.email = email if email else user.email
 		user.zip = zip if zip else user.zip
