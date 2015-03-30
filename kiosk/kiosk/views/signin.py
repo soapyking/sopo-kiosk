@@ -24,11 +24,11 @@ def submit_signin():
 	'''
 	uname = request.form.get('uname')
 	whatup = request.form.get('whatup')
-	name = request.form.get('fullname')
+	fullname = request.form.get('fullname')
 	email = request.form.get('email')
 	zip = request.form.get('zip')
 	utype = 'volunteer' if request.form.get('volunteering') else 'guest'
-	user_class = Volunteer if request.form.get('volunteering') else Guest
+	user_class = Volunteer if request.form.get('volunteering') else Guest # one step shy of metaclassing off a cliff
 	try:
 		user = user_class.query.filter_by(uname=uname).first()
 		if not user:
@@ -36,16 +36,14 @@ def submit_signin():
 			user = user_class()
 			user.uname = uname
 			user.utype = utype
-		user.name = name if name else user.name
-		user.email = email if email else user.email
-		user.zip = zip if zip else user.zip
+		user.fullname = fullname if fullname else user.fullname if user.fullname else ""
+		user.email = email if email else user.email if user.email else ""
+		user.zip = zip if zip else user.zip if user.zip else ""
 		app.logger.debug("User object: {}".format(user))
 		db.session.add(user)
 		db.session.commit()
 
-		app.logger.debug("User object after commit: {}".format(user))
 		signin = Signin()
-		app.logger.debug("User id after commit: {}".format(user.id))
 		signin.user_id = user.id
 		signin.event_id = Event.get_current_event().id
 		signin.notes = whatup
@@ -55,6 +53,10 @@ def submit_signin():
 		raise # winning
 	
 	return redirect(url_for('all_good'))
+
+@app.route('/scratch', methods=["GET"])
+def scratch():
+	return render_template("scratch.html")
 
 @app.route('/all_good', methods=["GET"])
 def all_good():
