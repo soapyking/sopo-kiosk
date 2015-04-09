@@ -11,7 +11,7 @@ class User(db.Model):
 	uname = db.Column(db.VARCHAR(255), nullable = False)
 	fullname = db.Column(db.VARCHAR(255), default="")
 	email = db.Column(db.VARCHAR(255), default = "")
-	zip = db.Column(db.VARCHAR(5), default = "")
+	uzip = db.Column(db.VARCHAR(5), default = "")
 	utype = db.Column(db.VARCHAR(255), mysql.ENUM('admin','volunteer','guest', 'base_user'),
 			default='base_user')
 	__table_args__ = (UniqueConstraint('utype', 'uname', name='_uname_utype_uc'),)

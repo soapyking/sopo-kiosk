@@ -41,7 +41,7 @@ def administration_home():
 def download_signins(since=None):
 	intimeformat = "%m/%d/%Y"
 	outtimeformat = "%Y-%b-%dT%H-%M-%S"
-	nowtime = datetime.datetime.utcnow().strftime(outtimeformat)
+	nowtime = datetime.datetime.utcnow()
 	since = request.args.get('since', None)
 	if since:
 		since = datetime.datetime.strptime(since, intimeformat)
@@ -53,16 +53,26 @@ def download_signins(since=None):
 	#csv_body = "\"\"\" These are the guest signins since {0} \"\"\"".format(since)
 	csv_body = ""
 	recent_signins = Signin.query.filter(Signin.time_in >= since).all()
-	with io.StringIO() as csv_out:
+	with io.BytesIO() as csv_out:
 		csv_writer = csv.writer(csv_out, dialect='excel', quoting=csv.QUOTE_ALL)
 		for signin in recent_signins:
 			guest = signin.user
-			if guest.type == 'guest' or guest.type == 'base_user':
+			if guest.utype in ['guest', 'base_user']:
 				event = signin.event
-				csv_line = [guest.uname, guest.email, guest.zip, signin.time_in, signin.notes]
+				csv_line = [
+						guest.uname,
+						guest.email,
+						guest.uzip,
+						signin.time_in.strftime(outtimeformat),
+						signin.notes,
+				]
 				csv_writer.writerow(csv_line)
 		csv_body = csv_body + csv_out.getvalue()
 	response = make_response(csv_body)
-	dated_filename = "guests_{0}_{1}".format(since, nowtime)
+	dated_filename = "guests_{0}_{1}".format(since, nowtime.strftime(outtimeformat))
 	response.headers["Content-Disposition"] = "attachment; filename={0}.csv".format(dated_filename)
 	return response
+
+def utf_8_encoder(unicode_csv_data):
+	for line in unicode_csv_data:
+		yield line.encode('utf-8')

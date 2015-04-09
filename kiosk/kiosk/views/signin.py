@@ -18,15 +18,12 @@ def emit_signin():
 
 @app.route('/signin', methods=["POST"])
 def submit_signin():
-	''' User submits user id
-		Create new user if doesn't already exist
-		Then bring user to edit his info
-	'''
+	''' Ingest user's information, make record of existence '''
 	uname = request.form.get('uname')
 	whatup = request.form.get('whatup')
 	fullname = request.form.get('fullname')
 	email = request.form.get('email')
-	zip = request.form.get('zip')
+	uzip = request.form.get('zip')
 	utype = 'volunteer' if request.form.get('volunteering') else 'guest'
 	user_class = Volunteer if request.form.get('volunteering') else Guest # one step shy of metaclassing off a cliff
 	try:
@@ -36,9 +33,20 @@ def submit_signin():
 			user = user_class()
 			user.uname = uname
 			user.utype = utype
-		user.fullname = fullname if fullname else user.fullname if user.fullname else ""
+		if fullname:
+			user.fullname = fullname
+		if not user.fullname:
+			user.fullname = ""
+		if email:
+			user.email = email
+		if not user.email:
+			user.email = ""
+		if uzip:
+			user.uzip = uzip
+		if not user.uzip:
+			user.uzip = ""
 		user.email = email if email else user.email if user.email else ""
-		user.zip = zip if zip else user.zip if user.zip else ""
+		user.uzip = uzip if uzip else user.uzip if user.uzip else ""
 		app.logger.debug("User object: {}".format(user))
 		db.session.add(user)
 		db.session.commit()
