@@ -6,5 +6,5 @@ class SopoConfig(SafeConfigParser):
 	sources = ['/etc/sopo.conf', '~/.sopo.conf']
 
 	def __init__(self):
-		super().__init__()
+		super(SafeConfigParser, self).__init__()
 		self.read(self.sources)
