@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %} Signin {% endblock %}
+<!DOCTYPE html>
+  {% block head %}
+  <link href="/static/css/signin.css" rel="stylesheet">
+  {% endblock %}
+
+  {% block content %}
+		<div class="container">
+			<form id="signoutform" action="/signout" class="form-signin" role="form" method="post">
+				<h3 class="form-signin-heading">Thanks for visiting!</h3>
+					<input type="text" class="form-control" name="uname" placeholder="username" autofocus required />
+        <h3 class="form-signin-heading">Leave some feedback?</h3>
+        <textarea class="form-control" rows="5" name="feedback"></textarea>
+				<button type="submit" class="btn btn-lg btn-primary btn-block">OK, bye!</button>
+			</form>
+  	</div>
+  {% endblock %}
+
+</body></html>
