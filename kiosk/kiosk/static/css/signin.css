@@ -36,3 +36,9 @@
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
 }
+
+.btn-seriously-big {
+	width: 80%;
+	height: 80%;
+	font-size: 2em;
+}

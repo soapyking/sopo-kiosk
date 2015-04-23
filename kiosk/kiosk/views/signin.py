@@ -7,7 +7,7 @@ from models.event import Event
 
 @app.route('/', methods=["GET"])
 def redirect_root():
-	return redirect(url_for('emit_signin'))
+	return redirect(url_for('emit_welcome'))
 
 @app.route('/signin', methods=["GET"])
 def emit_signin():

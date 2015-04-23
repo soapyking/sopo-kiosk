@@ -27,5 +27,7 @@ login_manager = LoginManager()
 login_manager.login_view = 'admin_login'
 login_manager.init_app(app)
 
+import kiosk.views.welcome
 import kiosk.views.signin
+import kiosk.views.signout
 import kiosk.views.administration

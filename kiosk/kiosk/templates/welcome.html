@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %} Signin {% endblock %}
+<!DOCTYPE html>
+  {% block head %}
+	<script type="text/javascript" src="/static/js/signin.js"></script>
+  <link href="/static/css/signin.css" rel="stylesheet">
+	<!-- <script type="text/javascript" src="/static/3p/js/jquery.steps.js"></script> -->
+  {% endblock %}
+
+  {% block content %}
+		<div class="container">
+			<div class="row" style="margin-bottom:100px">
+				<div class="col-md-12" style="text-align:center">
+					<h1>Welcome!</h1>
+				</div>
+			</div>
+			<div class="row" style="text-align:center">
+				<div class="col-md-6" style="height:150px">
+					<button type="button" class="btn btn-default btn-lg btn-primary btn-seriously-big" id="signin-button">
+						I'm arriving <span class="glyphicon glyphicon-pencil"></span></button>
+				</div>
+				<div class="col-md-6" style="height:150px">
+					<button type="button" class="btn btn-default btn-lg btn-primary btn-seriously-big" id="signout-button">
+						I'm leaving <span class="glyphicon glyphicon-road"></span></button>
+				</div>
+			</div>
+		</div>
+
+		<script type="text/javascript">
+			$(document).ready( function() {
+				console.log("loaded");
+				$("#signin-button").click(function() {
+					location.href = "{{ signin_url }}";});
+				$("#signout-button").click(function() {
+					location.href = "{{ signout_url }}";});
+			});
+
+		</script>
+  {% endblock %}
