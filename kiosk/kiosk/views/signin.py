@@ -58,8 +58,9 @@ def submit_signin():
 		db.session.add(signin)
 		db.session.commit()
 	except:
+		db.session.rollback()
 		raise # winning
-	
+
 	return redirect(url_for('all_good'))
 
 @app.route('/scratch', methods=["GET"])
@@ -68,4 +69,4 @@ def scratch():
 
 @app.route('/all_good', methods=["GET"])
 def all_good():
-	return render_template('all_good.html', target=url_for('emit_signin', _external=True))
+	return render_template('all_good.html', target=url_for('emit_welcome', _external=True))
