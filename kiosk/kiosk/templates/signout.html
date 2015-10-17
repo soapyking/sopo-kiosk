@@ -9,7 +9,10 @@
 		<div class="container">
 			<form id="signoutform" action="/signout" class="form-signin" role="form" method="post">
 				<h3 class="form-signin-heading">Thanks for visiting!</h3>
-					<input type="text" class="form-control" name="uname" placeholder="username" autofocus required />
+        <input type="text" class="form-control" name="uname" placeholder="username" autofocus required />
+        {% if error %}
+          <p class=error>{{error}}</p>
+        {% endif %}
         <h3 class="form-signin-heading">Leave some feedback?</h3>
         <textarea class="form-control" rows="5" name="feedback"></textarea>
 				<button type="submit" class="btn btn-lg btn-primary btn-block">OK, bye!</button>
